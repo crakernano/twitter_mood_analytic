@@ -1,7 +1,21 @@
 {
-  "name": "csv-reader",
-  "version": "0.1.0",
+  "name": "twitter_mood_analytic",
+  "version": "0.0.0",
+  "homepage": "./",
   "private": true,
+  "repository": {
+    "url": "",
+    "type": "git"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -18,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -39,5 +53,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+    },
+    "devDependencies": {
+      "@semantic-release/changelog": "^6.0.1",
+      "@semantic-release/git": "^10.0.1"
+    },
+
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/github",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ]
   }
-}
