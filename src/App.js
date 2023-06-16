@@ -1,25 +1,330 @@
-import logo from './logo.svg';
 import './App.css';
+//import moodData from './mood.csv'
+//import noData from './noData.png'
+import { useState, useEffect  } from 'react'
+import { CloudTags } from './components/CloudTags';
+import { Footer } from './components/Footer';
 
-function App() {
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Legend,
+// } from 'chart.js';
+//import { Line } from 'react-chartjs-2';
+import { SliderTime } from './components/SliderTime';
+import { useSelector } from 'react-redux';
+import { MoodImage } from './components/MoodImage';
+import { MetricasComponent } from './components/MetricasComponent';
+import { useGetData } from './hooks/useGetData';
+import { CloudTagsComponent } from './components/CloudTagsComponent';
+import { GraficaComponent } from './components/GraficaComponent';
+
+
+
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// );
+
+// var labels = [];
+// var datos = [];
+
+
+
+
+// function getLabelForValue(val){
+
+//   var label = ''
+//   switch (val) {
+//     case -1:
+//       label = '😢'
+//       break;
+//     case 0:
+//       label = '😐'
+//       break;
+//     case 1: 
+//     label = '🙂'
+//       break;
+//     default:
+//       label = ''
+//       break;
+//   }
+//   return label
+
+// }
+
+// function getTextLabelForValue(val){
+//   let label = '';
+//   switch (val) {
+//     case -1:
+//       label = '  Negativo';
+//       break;
+//     case 0:
+//       label = ' Neutral';
+//       break;
+//     case 1:
+//       label = ' Positivo'
+//       break;
+//     default:
+//       break;
+//   }
+//   return label;
+// }
+
+// const footer = (tooltipItems) => {
+//   return getLabelForValue(tooltipItems[0].parsed.y)
+// };
+
+// export const options = {
+//   responsive: true,
+//   scales:{
+//     y:{
+//       ticks:{
+//         callback: function(val, index){return getLabelForValue(val)}
+//       },
+      
+//     },
+//     x:{
+//       ticks:{
+//       color:'#FFFFFF',
+//       size: 16,
+//     },
+//     }
+//   },
+//   plugins: {
+//     legend: {
+//       position: 'top',
+      
+//       labels:{
+//         family: 'Jua',
+//         size: 14,
+//         color:'#FFFFFF',
+//       }
+//     },
+//     tooltip:{
+//       titleColor: '#FFFFFF',
+//       titleAlign: 'center',
+//       titleFont: {size: 16},     
+//       titleMarginBottom: 6,
+//       bodyAlign: 'center', 
+//       bodyFont: {size: 30},
+//       footerFont: {size: 10},   
+//       footerAlign: 'center',   
+//       footerMarginTop: 6,
+//       displayColors: false,
+//       callbacks: {
+//         title: function(){return 'Sentimiento'},
+//         label: function(context) {return getLabelForValue(context.parsed.y)},
+//         labelTextColor: function() {return '#FFFFFF';},
+//         footer: function(tooltipItems){return getTextLabelForValue(tooltipItems[0].parsed.y)}
+//       } 
+      
+//     },
+//     title: {
+//       display: true,
+//       text: 'Grafica de las emociones mayoritarias de cada día',
+//       font: {
+//         size: 25,
+//         family: 'Jua',
+//       }, 
+      
+//       color: '#FFFFFF',
+      
+//     },
+//   },
+// };
+
+const App = () => {
+  const [csvArray, setCsvArray] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  //const [currentDay, setCurrenDay] = useState([]);
+  const [currentDay, setCurrenDay] = useState(null);
+  const [currentData, setCurrenData] = useState(null)
+  
+  const [currentMood, setCurrentMood] = useState(null)
+
+  const date = useSelector((state)=>state.date.value);
+  const moodData = useGetData(date);
+
+  useEffect(()=>{
+    setLoading(true);
+    console.log("Ahora vale "+ date);
+    if (date != null){setCurrenDay(date)}
+    setLoading(false);
+  },[date])
+
+  useEffect(()=>{
+    setLoading(true);
+    if(moodData != null){
+      console.log("Mood: " + moodData.mood)
+      
+      //setCurrentMood(moodData.mood);
+      //setCurrenData(moodData);
+      console.log(moodData)
+    }
+    setLoading(false);
+  }, [moodData])
+  
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const delim=',';
+  //     try {
+  //       await fetch(moodData)
+  //       .then(r => r.text())
+  //       .then(text => {
+  //         console.log('text decoded:', text);
+  //         const headers = text.slice(0,text.indexOf('\n')).split(delim);
+  //         const rows = text.slice(text.indexOf('\n')+1).split('\n');
+
+  //         const newArray = rows.map( row => {
+  //           const values = row.split(delim);
+  //           const eachObject = headers.reduce((obj, header, i) => {
+  //               obj[header.trim()] = values[i];
+  //               return obj;
+  //           }, {})
+  //           return eachObject;
+  //       })
+  //         setCsvArray(newArray);
+  //       });
+  //       setError(null);
+  //     } catch(err) {
+  //       setError(err.message);      
+  //       setCsvArray(null);
+  //     } finally {
+  //       setLoading(false);
+  //     }  
+  //   }
+  //   getData()
+  // }, [])
+
+
+  // csvArray.map((item, i) => (
+  //   labels.push(item.date)    
+  //   ))
+
+  //   csvArray.map((item, i) => (
+  //     datos.push(item.mood)    
+  //     ))
+
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       label: 'Sentimiento',
+  //       data: datos,
+  //       borderColor: '#4535EA',
+  //       backgroundColor: '#4535EA',
+  //       pointRadius: 6,
+        
+  //     },
+  //   ],
+  // };
+
+  if(loading){return(<h1>Cargando</h1>)}
+  if(error != null){return(<h1>Error: {error}</h1>)}
+  // console.log(csvArray[0]);
+  // console.log("Dia actual");
+  // console.log(currentDay);
+  //let img = '';
+  // let positiveTwits, negativeTwits, totalTwits = '';
+  // if(currentDay.mood == null){img=noData}
+  // if(currentDay.mood == -1){img='https://cdn.iconscout.com/icon/free/png-256/sad-2689419-2232260.png'}
+  // if(currentDay.mood == 0){img='https://em-content.zobj.net/source/noto-emoji-animations/344/neutral-face_1f610.gif'}
+  // if(currentDay.mood == 1){img='https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Happy_large.png?v=1571606093'}
+  // if(currentDay.positive == null){positiveTwits = "Selecciona un día"}else{positiveTwits = Math.round(currentDay.positive) + '%'}
+  // if(currentDay.negative == null){negativeTwits = "Selecciona un día"}else{negativeTwits = Math.round(currentDay.negative) + '%'}
+  // if(currentDay.total == null){totalTwits = "Selecciona un día"}else{totalTwits = currentDay.total}
+
+
+
   return (
+
+
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <h2>Selecciona el día del que quieres ver el analisis:</h2>
+      <SliderTime/>
+      {/* <nav aria-label="day-navigation">
+        <ul className="pagination">
+            <li className="page-item">
+            <a className="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+            </li>
+            {
+                csvArray.map((item, i) => (
+                  <li key={i} className="page-item"><a className="page-link" onClick={() => setCurrenDay(csvArray[i])}>{item.date}</a></li>
+                  ))
+            }
+            <li className="page-item">
+            <a className="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+            </li>
+        </ul>
+        </nav> */}
+       
+      <p>Dia Seleccionado:</p>
+
+      {/*currentDay.date*/}
+      {date}
+      
+      <MoodImage
+      currentDay = {moodData}
+      />
+      
+      {/* <img className='moodImg' src={img} alt={currentDay.mood}/> */}
+      <h3>Temas más comentados del momento</h3>
+
+      <CloudTagsComponent
+        currentDay={moodData}
+      />
+
+      <h3>Métricas</h3>
+      
+      <MetricasComponent
+        currentDay = {moodData}
+      />
+
+      {/* <div className="container text-center">
+        <div className="row">
+        <div className="w-100">Twits totales analizado</div>
+        <div className="w-100"><span className='counter-field'>{totalTwits}</span></div>
+        
+          <div className="col-6">Tweets Positivos</div>
+          <div className="col-6">Tweets Negativos</div>
+
+          <div className="w-100"></div>          
+          <div className="col-6"><span className='counter-field'>{positiveTwits}</span></div>
+          <div className="col-6"><span className='counter-field'>{negativeTwits}</span></div>
+        </div>
+      </div> */}
+
+      <GraficaComponent/> 
+
+  {/* <div className="container text-center" id='char-container'>
+    <Line options={options} data={data} />
+  </div> */}
       </header>
+      <Footer/>
+
+
     </div>
+
   );
 }
+
+
 
 export default App;

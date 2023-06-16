@@ -1,5 +1,10 @@
+body{
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
+  font-family: 'Jua', sans-serif;
 }
 
 .App-logo {
@@ -35,4 +40,55 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.cloud-container{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  width: 70%;
+}
+
+
+
+.counter-field{
+  font-family: 'Jua', sans-serif;
+  font-size: 1.5rem;
+  color: rgb(215, 249, 129);
+}
+
+footer{
+  background-color: #20232a;
+  color:white;
+  padding-bottom: 2rem;
+  padding-top: 3rem;
+  border-top: #282c58 1px solid;
+}
+
+.moodImg{
+  height: 256px;
+  width: 256px;
+  margin-bottom: 2rem;
+}
+
+.page-link{
+  background-color: #282c34 !important;
+  border-color: #282c34 !important;
+  color: white !important;
+}
+
+#char-container{
+  padding-bottom: 3rem;
+  margin-top: 5rem;
+}
+
+.cabecera{
+  background-color: #20232a !important;
+  color: white !important;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.fs-4{
+  color: white !important;
+  font-family: 'Jua', sans-serif;
 }
