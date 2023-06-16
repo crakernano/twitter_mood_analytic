@@ -1,7 +1,7 @@
 export const MetricasComponent = ({currentDay}) => {
 
     if(currentDay == null){
-        return("Seleccione un día")
+        return("Selecciona un día")
     }
 
     //console.log("Metricas:" + currentDay.date)

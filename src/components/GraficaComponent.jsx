@@ -9,7 +9,7 @@ import {
     Legend,
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
-import { useGetAllData, useGetData } from '../hooks/useGetData';
+import { useGetAllData } from '../hooks/useGetData';
 
 
 export const GraficaComponent = ( ) => {

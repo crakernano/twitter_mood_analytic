@@ -2,11 +2,20 @@ body{
   background-color: #282c34;
 }
 
+h2, h3, h4{
+  color: #AB2A3E;
+}
+
 .App {
   text-align: center;
   font-family: 'Jua', sans-serif;
 }
 
+.disable{
+  color: #C0C0C0;
+  font-size: 1.3rem;
+  padding: 2rem;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -74,6 +83,7 @@ footer{
   background-color: #282c34 !important;
   border-color: #282c34 !important;
   color: white !important;
+  cursor: pointer;
 }
 
 #char-container{
@@ -91,4 +101,8 @@ footer{
 .fs-4{
   color: white !important;
   font-family: 'Jua', sans-serif;
+}
+
+.css-yafthl-MuiSlider-markLabel{
+  color: white !important;
 }

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 export const CloudTagsComponent = ({currentDay}) => {
 
   if(currentDay == null){return ("Selecciona un día")}
-  if(currentDay.tags == null){return ("No hay datos disponibles")}
+  if(currentDay.tags == null){return (<>  <span class = 'disable'>No hay datos disponibles</span></>  )}
 
   console.log(currentDay.tags)
   let tags = []
