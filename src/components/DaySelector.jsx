@@ -1,64 +1,69 @@
-import { useState, useEffect} from 'react'
-import moodData from '../mood.csv'
+import '../App.css';
+import { useState, useEffect, useContext, useReducer} from 'react'
 
-export const DaySelector = () => {
+import { useDispatch } from 'react-redux';
+import { setDate } from '../store/dateSlicer';
 
-    const [currentDay, setCurrenDay] = useState([]);
-    const [csvArray, setCsvArray] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    useEffect(() => {
-        const getData = async () => {
-          const delim=',';
-          try {
-            await fetch(moodData)
-            .then(r => r.text())
-            .then(text => {
-              console.log('text decoded:', text);
-              const headers = text.slice(0,text.indexOf('\n')).split(delim);
-              const rows = text.slice(text.indexOf('\n')+1).split('\n');
+export const DaySelector = (days) => {
+  
+const [AllDays, setAllDays] = useState();
+const [CurrenDay, setCurrenDay] = useState();
+const [isLoading, setIsLoadin] = useState(true);
+const [listDays, setListDays] = useState(null);
+const [countDays, setCountDays] = useState(null);
+
+const dispatch = useDispatch();
+
+useEffect(()=>{
+  const getDays = async()=>{
+    try{
+      const availableDays = days["days"]
+      setCountDays(Object.keys(availableDays).length);
+      setListDays(Object.values(availableDays));
+
+      setIsLoadin(false)
+    }catch(err){
+      console.log(err)
+    }
+  }
+  getDays()
+},[days])
+
+
+useEffect(()=>{
+  const getCurrentDay = async()=>{
+    console.log("CAMBIADO");
+    console.log(CurrenDay);
     
-              const newArray = rows.map( row => {
-                const values = row.split(delim);
-                const eachObject = headers.reduce((obj, header, i) => {
-                    obj[header.trim()] = values[i];
-                    return obj;
-                }, {})
-                return eachObject;
-            })
-              setCsvArray(newArray);
-            });
-            setError(null);
-          } catch(err) {
-            setError(err.message);      
-            setCsvArray(null);
-          } finally {
-            setLoading(false);
-          }  
-        }
-        getData()
-      }, [])
+  }
+  getCurrentDay()
+},[CurrenDay])
+
+
+
+
+const handleSelection = (selectedDat) => {
+  console.log("Guardando: " + selectedDat.date);  
+  dispatch(setDate(selectedDat.date));
+}
+
+if(days == null || days == undefined){return({isLoading})}
+if(listDays == null){return(<>ERROR</>)}
 
 
 return(
-<nav aria-label="Page navigation example">
-<ul className="pagination">
-    <li className="page-item">
-    <a className="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-    </a>
-    </li>
-    {
-        csvArray.map((item, i) => (
-        <li key={i} className="page-item"><a className="page-link" onClick={() => setCurrenDay(csvArray[i])}>{item.date}</a></li>
-        ))
-    }
-    <li className="page-item">
-    <a className="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-    </a>
-    </li>
-</ul>
-</nav>)
+<>
+
+
+<nav aria-label="day-navigation">
+  <ul className="pagination">
+    {listDays.map((day, i) => <li key={i} className="page-item"><a className="page-link" onClick={() => handleSelection(listDays[i])}>{day.date.split("-")[2]} </a></li>)}
+  </ul>
+</nav>
+
+{/* <p>{countDays} días disponibles </p> */}
+</>
+
+)
 
 }
