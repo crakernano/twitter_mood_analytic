@@ -28,10 +28,6 @@ function valueLabelFormat(value) {
   return month.findIndex((month) => month.value === value) + 1;
 }
 
-
-
-
-
 export const SliderTime = () => {
   const [currentMonth, setCurrenMonth] = useState(["Enero"]);
   
@@ -47,10 +43,9 @@ export const SliderTime = () => {
         setError(null);
       } catch(err) {
         setError(err);
-        console.log(error);
-      } finally {
-        setError(null);
-      }  
+        //console.log(error);
+        setError(err)
+      }
     }
     getData()
   }, [currentMonth])
@@ -72,6 +67,8 @@ export const SliderTime = () => {
     //console.log(month[e.target.value - 1].label);
     setCurrenMonth(month[e.target.value - 1].label)
   }
+
+  if(error != null){return(<>ERROR: {error}</>)}
 
   return (
     

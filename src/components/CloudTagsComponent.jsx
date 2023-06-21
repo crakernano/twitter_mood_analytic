@@ -16,6 +16,7 @@ export const CloudTagsComponent = ({currentDay}) => {
     tags_list.map((tag, i) =>{
       const newTag = {value: tag, count: currentDay.tags[tag]}
       tags.push(newTag);
+      return tags
     })
   }
 
