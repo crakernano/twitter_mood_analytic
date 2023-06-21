@@ -13,8 +13,6 @@ import { useGetAllData } from '../hooks/useGetData';
 
 
 export const GraficaComponent = ( ) => {
-    const availability = false
-
     ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -42,7 +40,9 @@ export const GraficaComponent = ( ) => {
         datos.push(mood_data[mes][dia].mood)        
         const label = dia + "-" + mes
         labels.push(label);
+        return datos;
       })      
+      return labels;
     })
     
     function getLabelForValue(val){

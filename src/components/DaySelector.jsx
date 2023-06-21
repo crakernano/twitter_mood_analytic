@@ -1,13 +1,13 @@
 import '../App.css';
-import { useState, useEffect, useContext, useReducer} from 'react'
+import { useState, useEffect} from 'react'
 
 import { useDispatch } from 'react-redux';
 import { setDate } from '../store/dateSlicer';
 
 export const DaySelector = (days) => {
   
-const [AllDays, setAllDays] = useState();
-const [CurrenDay, setCurrenDay] = useState();
+//const [AllDays, setAllDays] = useState();
+//const [CurrenDay, setCurrenDay] = useState();
 const [isLoading, setIsLoadin] = useState(true);
 const [listDays, setListDays] = useState(null);
 const [countDays, setCountDays] = useState(null);
@@ -30,14 +30,14 @@ useEffect(()=>{
 },[days])
 
 
-useEffect(()=>{
-  const getCurrentDay = async()=>{
-    console.log("CAMBIADO");
-    console.log(CurrenDay);
+// useEffect(()=>{
+//   const getCurrentDay = async()=>{
+//     console.log("CAMBIADO");
+//     console.log(CurrenDay);
     
-  }
-  getCurrentDay()
-},[CurrenDay])
+//   }
+//   getCurrentDay()
+// },[CurrenDay])
 
 
 
@@ -47,17 +47,17 @@ const handleSelection = (selectedDat) => {
   dispatch(setDate(selectedDat.date));
 }
 
-if(days == null || days == undefined){return({isLoading})}
+if(days === null || days === undefined){return({isLoading})}
 if(listDays == null){return(<>ERROR</>)}
 
 
 return(
 <>
 
-
+<p style={{fontSize:".7rem"}}>({countDays} días analizados)</p>
 <nav aria-label="day-navigation">
   <ul className="pagination">
-    {listDays.map((day, i) => <li key={i} className="page-item"><a className="page-link" onClick={() => handleSelection(listDays[i])}>{day.date.split("-")[2]} </a></li>)}
+    {listDays.map((day, i) => <li key={i} className="page-item"><span className="page-link" onClick={() => handleSelection(listDays[i])}>{day.date.split("-")[2]} </span></li>)}
   </ul>
 </nav>
 
