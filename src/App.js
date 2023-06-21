@@ -12,7 +12,7 @@ import { GraficaComponent } from './components/GraficaComponent';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
   
   const date = useSelector((state)=>state.date.value);
   const moodData = useGetData(date);
@@ -29,7 +29,7 @@ const App = () => {
   
 
   if(loading){return(<h1>Cargando</h1>)}
-  if(error != null){return(<h1>Error: {error}</h1>)}
+  //if(error != null){return(<h1>Error: {error}</h1>)}
 
   return (
 
